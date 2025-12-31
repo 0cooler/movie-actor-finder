@@ -21,7 +21,7 @@
 <body>
     <div id="root"></div>
 
-```
+
 <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
@@ -184,6 +184,16 @@
         return () => document.removeEventListener('mousedown', handleClickOutside);
       }, [showDropdown]);
 
+      // Auto-search when 2+ movies are selected
+      useEffect(() => {
+        const validMovies = selectedMovies.filter(m => m !== null);
+        if (validMovies.length >= 2) {
+          findOverlappingActors();
+        } else {
+          setOverlappingActors([]);
+        }
+      }, [selectedMovies]);
+
       const validSelectedMovies = selectedMovies.filter(m => m !== null);
 
       return (
@@ -258,23 +268,15 @@
                 ))}
               </div>
 
-              <div className="flex gap-3 mt-4 flex-col sm:flex-row">
+              <div className="flex gap-3 mt-4">
                 <button
                   onClick={addMovieInput}
-                  className="flex items-center justify-center gap-2 px-4 py-2 bg-purple-500/30 hover:bg-purple-500/40 text-purple-100 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-purple-500/30 hover:bg-purple-500/40 text-purple-100 rounded-lg transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                   Add Another Movie
-                </button>
-
-                <button
-                  onClick={findOverlappingActors}
-                  disabled={loading}
-                  className="flex-1 px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
-                >
-                  {loading ? 'Searching...' : `Find Overlapping Actors${validSelectedMovies.length >= 2 ? '' : ` (${validSelectedMovies.length}/2 selected)`}`}
                 </button>
               </div>
 
@@ -369,7 +371,7 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<MovieActorOverlap />);
 </script>
-```
+
 
 </body>
 </html>
