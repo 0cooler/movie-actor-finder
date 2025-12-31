@@ -299,13 +299,17 @@
                       <tr className="border-b border-purple-300/30">
                         <th className="text-left py-3 px-2 sm:px-4 text-purple-200 font-semibold">Actor</th>
                         {validSelectedMovies.map((movie, idx) => (
-                          <th key={idx} className="text-left py-3 px-2 sm:px-4 text-purple-200 font-semibold">
+                          <th key={idx} className="text-center py-3 px-2 sm:px-4 text-purple-200 font-semibold">
                             <div className="flex flex-col items-center gap-2">
                               {movie.poster_path && (
                                 <img 
-                                  src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
+                                  src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
                                   alt={movie.title}
-                                  className="w-16 sm:w-20 rounded shadow-lg"
+                                  className={`rounded shadow-lg object-cover ${
+                                    validSelectedMovies.length === 2 ? 'h-32 sm:h-40' :
+                                    validSelectedMovies.length === 3 ? 'h-24 sm:h-32' :
+                                    'h-20 sm:h-24'
+                                  }`}
                                 />
                               )}
                               <div className="text-center">
@@ -341,7 +345,7 @@
                           {validSelectedMovies.map((movie, movieIdx) => {
                             const appearance = actor.appearances.find(app => app.movieIndex === movieIdx);
                             return (
-                              <td key={movieIdx} className="py-3 px-2 sm:px-4 text-purple-100 text-xs sm:text-sm">
+                              <td key={movieIdx} className="py-3 px-2 sm:px-4 text-purple-100 text-xs sm:text-sm text-center">
                                 {appearance ? (
                                   <span className="italic">{appearance.character || 'Unknown role'}</span>
                                 ) : (
