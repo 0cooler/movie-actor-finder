@@ -82,6 +82,11 @@
         newInputs[index] = value;
         setMovieInputs(newInputs);
 
+        // Clear the selected movie when user starts typing/editing
+        const newSelected = [...selectedMovies];
+        newSelected[index] = null;
+        setSelectedMovies(newSelected);
+
         const newDropdown = [...showDropdown];
         newDropdown[index] = true;
         setShowDropdown(newDropdown);
@@ -301,7 +306,7 @@
                         {validSelectedMovies.map((movie, idx) => (
                           <th key={idx} className="py-3 px-2 sm:px-4">
                             {movie.poster_path && (
-                              <div className={`flex items-end justify-center ${
+                              <div className={`flex items-end justify-center mx-auto ${
                                 validSelectedMovies.length === 2 ? 'h-32 sm:h-40' :
                                 validSelectedMovies.length === 3 ? 'h-24 sm:h-32' :
                                 'h-20 sm:h-24'
@@ -309,7 +314,7 @@
                                 <img 
                                   src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
                                   alt={movie.title}
-                                  className="max-h-full w-auto rounded shadow-lg"
+                                  className="max-h-full w-auto rounded shadow-lg object-contain"
                                 />
                               </div>
                             )}
