@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse
 import re
 
-API_KEY = '6e31bf1b8185bda03344530cafe38caa'
+API_KEY = '4c4ae26aebfea1e40d21bc90a496e46a'
 BASE_URL = 'https://api.themoviedb.org/3'
 
 class handler(BaseHTTPRequestHandler):
